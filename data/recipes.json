@@ -1,0 +1,71 @@
+[
+    {
+        "name": "Slow-Cooker Pot Roast",
+        "instructions": "Season the Chuck Roast, then place in the slow-cooker. Add about a 1/2 cup of water. Then, add in the potatoes and carrots. Cook on low for 6 hours.  Shred or cut into smaller chunks before serving.",
+        "ingredients": [
+            {"name": "Chuck Roast", "qty":1},
+            {"name": "1 lb Yukon Gold Potatoes", "qty":1},
+            {"name": "16 oz Package of Baby Carrots", "qty":1}
+        ]
+    }, 
+    {
+        "name": "Slow-Cooked Creamy Chicken",
+        "instructions": "Place the chicken breasts and then cream cheese into the slow cooker, then season with the ranch packet. Cook on low for 6 hours total. At 5 hours, cook the bacon. Shred the chicken and add the bacon to the slow cooker. Cook for 1 more hour. Before serving, sprinkle shredded cheese on top and allow it to melt.",
+        "ingredients": [
+            {"name": "Boneless Chicken Breast", "qty":5},
+            {"name": "8 oz Package of Cream Cheese", "qty":2},
+            {"name": "1 oz Packet Hidden Valley Ranch Seasoning", "qty":1},
+            {"name": "24 oz Package of Bacon", "qty":1}
+        ]
+    },
+    {
+        "name": "Mom's Spaghetti",
+        "instructions": "Begin to boil water for the noodles. When it boils, put the noodles in and allow to cook. While they're cooking prepare the sauce. \n\n For the sauce, brown the ground beef. Once cooked, add in tomato sauce, condensed cream of mushroom soup, and seasoning packet.  Stir well until sauce is uniform. Simmer while noodles finish cooking.  Strain the noodles, add the sauce, and serve.",
+        "ingredients": [
+            {"name": "16 oz Package of Spaghetti Noodles", "qty":1},
+            {"name": "1 lb Ground Beef", "qty":1},
+            {"name": "1 oz Packet McCormick Zesty Italian Seasoning", "qty":1},
+            {"name": "15 oz Can of Tomato Sauce", "qty":2},
+            {"name": "10.5 oz Can of Condensed Cream of Mushroom Soup", "qty": 1}
+        ]
+    },
+    {
+        "name": "Easy Alfredo",
+        "instructions": "Boil water, then add Fetucini noodles. Cook until tender.  Strain the water from the noodles, place in a serving bowl, stir in the jar of Alfredo sauce.",
+        "ingredients": [
+            {"name": "16 oz Package of Fetucinni Noodles", "qty":1},
+            {"name": "16 oz Jar of Alfredo Sauce", "qty":1}
+        ]
+    },
+    {
+        "name": "Mom's Beef Stroganoff",
+        "instructions": "Boil water for the noodles, add as soon as it begins to boil.  Brown the ground beef.  Once it's cooked, add the can of Cream of Mushroom soup, then fill the can with water and add it to the sauce.  Add in 8 oz of Sour Cream. Add in packet of brown gravy.  Stir until uniform.  Simmer until noodles have finished cooking.  Strain the noodles, then mix the sauce with the noodles.",
+        "ingredients": [
+            {"name": "1 lb Ground Beef", "qty":1},
+            {"name": "12 oz Package Egg Noodles", "qty":1},
+            {"name": "10.5 oz Can of Condensed Cream of Mushroom Soup", "qty": 1},
+            {"name": "1 oz Packet Brown Gravy Mix", "qty": 1},
+            {"name": "8 oz Sour Cream", "qty": 1}
+        ]
+    },
+    {
+        "name": "Easy Burritos",
+        "instructions": "Brown the ground beef. Once cooked, add taco seasoning packet. Add in black beans, stir until the whole mix is heated.  Serve with your choice of vegetables and toppings wrapped in a tortilla.",
+        "ingredients":[
+            {"name": "1 lb Ground Beef", "qty":1},
+            {"name": "1 oz Packet Taco Seasoning", "qty": 1},
+            {"name": "15 oz Can of Black Beans", "qty": 1},
+            {"name": "8 ct Package of Flour Tortillas", "qty": 1}
+        ]
+    },
+    {
+        "name": "Air Fryer Pizza Bagels",
+        "instructions": "Cut a bagel in half. Add a spoonful of marinara to each half. Sprinkle on shredded mozzarella cheese. Add pepperoni. Bake in air fryer for 2 minutes at 340 degrees.",
+        "ingredients":[
+            {"name": "6 ct Package of Plain Bagels", "qty": 1},
+            {"name": "14 oz Jar of Pizza Sauce", "qty": 1},
+            {"name": "16 oz Bag of Shredded Mozzarella", "qty:": 1},
+            {"name": "6 oz Package of Sliced Pepperoni", "qty": 1}
+        ]
+    }
+]
