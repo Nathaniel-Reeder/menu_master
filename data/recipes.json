@@ -64,7 +64,7 @@
         "ingredients":[
             {"name": "6 ct Package of Plain Bagels", "qty": 1},
             {"name": "14 oz Jar of Pizza Sauce", "qty": 1},
-            {"name": "16 oz Bag of Shredded Mozzarella", "qty:": 1},
+            {"name": "16 oz Bag of Shredded Mozzarella", "qty": 1},
             {"name": "6 oz Package of Sliced Pepperoni", "qty": 1}
         ]
     }

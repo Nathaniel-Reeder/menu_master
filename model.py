@@ -10,7 +10,7 @@ class User(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique = True, nullable = False)
-    email = db.Colun(db.String, unique = True, nullable = False)
+    email = db.Column(db.String, unique = True, nullable = False)
     password = db.Column(db.String, nullable = False)
     
     def __repr__(self):
@@ -91,7 +91,7 @@ class OnHand(db.Model):
     def create(cls, user, ingredient, quantity):
         return cls(user=user, ingredient=ingredient, quantity=quantity)
 
-class Menus(db.Model):
+class Menu(db.Model):
     '''A menu item. One menu can have many days planned.'''
     __tablename__ = 'menus'
     
@@ -125,12 +125,22 @@ class Day(db.Model):
     def create(cls, day_of_week, menu):
         return cls(day_of_week=day_of_week, menu=menu)
     
-'''An association table for recipes within a given day.''' 
-days_recipes = db.Table(
-    'days_recipes',
-    db.Column('day_id', db.ForeignKey(Day.id)),
-    db.Column('recipe_id', db.ForeignKey(Recipe.id))
-)
+class DaysRecipe(db.Model):
+    '''An association table for recipes within a given day.'''
+    __tablename__ = 'days_recipes'
+    id = db.Column(db.Integer, primary_key = True)
+    day_id = db.Column(db.Integer, db.ForeignKey('days.id'))
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
+    
+    day = db.relationship('Day', backref='days_recipes')
+    recipe = db.relationship('Recipe', backref='days_recipes')
+    
+    def __repr__(self):
+        return f'<DaysRecipe id={self.id} day={self.day_id} recipe={self.recipe_id}>'
+    
+    @classmethod
+    def create(cls, day, recipe):
+        return cls(day=day, recipe=recipe)
 
 class GroceryList(db.Model):
     '''A list of ingredients.'''
@@ -156,7 +166,7 @@ class GroceryIngredient(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'))
     grocery_list_id = db.Column(db.Integer, db.ForeignKey('grocery_list.id'))
-    quantity = db.Columne(db.Integer, nullable = False)
+    quantity = db.Column(db.Integer, nullable = False)
     
     ingredient = db.relationship('Ingredient', backref='grocery_ingredients')
     grocery_list = db.relationship('GroceryList', backref=('grocery_ingredients'))
