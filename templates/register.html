@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Menu Master: Register{% endblock %}
+
+{% block body %}
+    <div class="form-container">
+        <h2>Create New User</h2>
+        <form action="{{url_for('register')}}" method="POST">
+            {{ create_user_form.csrf_token() }}
+            <div class="row">
+                <div class="col">
+                    {{ create_user_form.username.label }}
+                </div>
+                <div class="col">
+                    {{ create_user_form.username }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ create_user_form.email.label }}
+                </div>
+                <div class="col">
+                    {{ create_user_form.email }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ create_user_form.password.label }}
+                </div>
+                <div class="col">
+                    {{ create_user_form.password }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ create_user_form.confirm_password.label }}
+                </div>
+                <div class="col">
+                    {{ create_user_form.confirm_password }}
+                </div>
+            </div>
+            {{ create_user_form.submit }}
+        </form>
+    </div>
+{% endblock %}
+

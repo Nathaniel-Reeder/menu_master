@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Menu Master: Pantry{% endblock %}
+
+{% block body %}
+
+{% for item in user_pantry %}
+    <ul>
+        <li>Name: {{item.ingredient.name}}</li>
+        <li>Quantity: {{item.quantity}}</li>
+        <a href="">+1</a>
+        <a href="">-1</a>
+        <a href="/pantry/delfrom/{{item.ingredient.id}}">Remove</a>
+    </ul>
+{% endfor %}
+{% endblock %}

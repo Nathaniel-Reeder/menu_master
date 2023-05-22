@@ -1,10 +1,11 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     '''A user with their username, email, and password'''
     __tablename__ = 'users'
     
@@ -97,6 +98,7 @@ class Menu(db.Model):
     
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String)
+    active = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
     user = db.relationship('User', backref='menus')
