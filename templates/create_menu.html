@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Menu Master: Create Menu{% endblock %}
+
+{% block body %}
+
+<h3>Create Menu</h3>
+
+<form action="{{url_for('create_menu')}}" method="POST">
+    {{ create_menu_form.csrf_token() }}
+
+    {{ create_menu_form.name.label }}
+    {{ create_menu_form.name}}
+
+    {{ create_menu_form.sunday_recipe.label }}
+    {{ create_menu_form.sunday_recipe }}
+
+    {{ create_menu_form.monday_recipe.label }}
+    {{ create_menu_form.monday_recipe }}
+
+    {{ create_menu_form.tuesday_recipe.label }}
+    {{ create_menu_form.tuesday_recipe }}
+
+    {{ create_menu_form.wednesday_recipe.label }}
+    {{ create_menu_form.wednesday_recipe }}
+
+    {{ create_menu_form.thursday_recipe.label }}
+    {{ create_menu_form.thursday_recipe }}
+
+    {{ create_menu_form.friday_recipe.label }}
+    {{ create_menu_form.friday_recipe }}
+
+    {{ create_menu_form.saturday_recipe.label }}
+    {{ create_menu_form.saturday_recipe }}
+
+    {{ create_menu_form.submit }}
+</form>
+
+{% endblock %}

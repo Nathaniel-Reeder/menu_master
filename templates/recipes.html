@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Menu Master: Recipes{% endblock %}
+
+{% block body %}
+<h1>Recipes</h1>
+
+<a href="{{url_for('add_recipe')}}">Add Recipe</a>
+
+{% for recipe in user_recipes %}
+    <h3>{{ recipe.name }}</h3>
+    <h4>Ingredients:</h4>
+    {% for ri in recipe.recipe_ingredients %}
+    <ul>
+        <li>{{ ri.quantity }} {{ ri.ingredient.name }}</li>
+    </ul>
+    {% endfor %}
+<h4>Instructions:</h4>
+<p>{{ recipe.instructions }}</p>
+<br>
+<a href="{{url_for('delete_recipe', recipe_id=recipe.id)}}">Delete</a>
+{% endfor %}
+
+{% endblock %}

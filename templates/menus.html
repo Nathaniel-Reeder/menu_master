@@ -1,1 +1,42 @@
-{{ extends 'base.html'}}
+{% extends 'base.html' %}
+
+{% block title %}Menu Master: Menus{% endblock %}
+
+{% block body %}
+
+<a href="{{url_for('create_menu')}}">Create New Menu</a>
+<br>
+
+{% if active_menu %}
+<h3>Active Menu:</h3>
+<h4>{{ active_menu.name }}</h4>
+    {% for day in active_menu.days %}
+        <h5>{{ day.day_of_week }}</h5>
+        <ul>
+            {% for day_recipe in day.days_recipes %}
+                <li>{{ day_recipe.recipe.name }}</li>
+                <li><a href="{{url_for('view_recipe', recipe_id=day_recipe.recipe.id)}}">View Recipe</a></li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+<a href="{{url_for('deactivate_menu', menu_id=active_menu.id)}}">Deactivate Menu</a>
+{% endif %}
+
+<br>
+<h3>Your Menus:</h3>
+{% for menu in user_menus %}
+    <h4>{{ menu.name }}</h4>
+    <a href="{{url_for('make_menu_active', menu_id=menu.id)}}">Make Active</a>
+    <a href="{{url_for('delete_menu', menu_id=menu.id)}}">Delete Menu</a>
+    {% for day in menu.days %}
+        <h5>{{ day.day_of_week }}</h5>
+        <ul>
+            {% for day_recipe in day.days_recipes %}
+                <li>{{ day_recipe.recipe.name }}</li>
+                <li><a href="{{url_for('view_recipe', recipe_id=day_recipe.recipe.id)}}">View Recipe</a></li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endfor %}
+
+{% endblock %}

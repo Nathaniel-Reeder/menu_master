@@ -45,7 +45,7 @@ class Recipe(db.Model):
     instructions = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
-    user = db.relationship('User', backref='recipes')
+    user = db.relationship('User', backref='recipes', lazy=False)
     
     def __repr__(self):
         return f'<Recipe id={self.id} name={self.name} user_id={self.user_id}>'
@@ -63,8 +63,8 @@ class RecipeIngredient(db.Model):
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'))
     quantity = db.Column(db.Integer, nullable = False)
     
-    recipe = db.relationship('Recipe', backref='recipe_ingredients')
-    ingredient = db.relationship('Ingredient', backref='recipe_ingredients')
+    recipe = db.relationship('Recipe', backref='recipe_ingredients', lazy=False)
+    ingredient = db.relationship('Ingredient', backref='recipe_ingredients', lazy=False)
     
     def __repr__(self):
         return f'<RecipeIngredient id={self.id} recipe_id={self.recipe_id} ingredient_id={self.ingredient_id} quantity={self.quantity}>'
@@ -82,8 +82,8 @@ class OnHand(db.Model):
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'))
     quantity = db.Column(db.Integer, nullable = False)
     
-    user = db.relationship('User', backref='on_hand')
-    ingredient = db.relationship('Ingredient', backref='on_hand')
+    user = db.relationship('User', backref='on_hand', lazy=False)
+    ingredient = db.relationship('Ingredient', backref='on_hand', lazy=False)
     
     def __repr__(self):
         return f'<OnHand id={self.id} user_id={self.user_id} ingredient_id={self.ingredient_id} quantity={self.quantity}>'
@@ -101,7 +101,8 @@ class Menu(db.Model):
     active = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
-    user = db.relationship('User', backref='menus')
+    # days = db.relationship('Day', backref='menus')
+    user = db.relationship('User', backref='menus', lazy=False)
     
     def __repr__(self):
         return f'<Menu id={self.id} name={self.name} user_id={self.user_id}>'
@@ -118,7 +119,7 @@ class Day(db.Model):
     day_of_week = db.Column(db.Integer)
     menu_id = db.Column(db.Integer, db.ForeignKey('menus.id'))
     
-    menu = db.relationship('Menu', backref='days')
+    menu = db.relationship('Menu', backref='days', lazy=False)
     
     def __repr__(self):
         return f'<Day id={self.id} day_of_week={self.day_of_week} menu_id={self.menu_id}>'
@@ -134,8 +135,8 @@ class DaysRecipe(db.Model):
     day_id = db.Column(db.Integer, db.ForeignKey('days.id'))
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
     
-    day = db.relationship('Day', backref='days_recipes')
-    recipe = db.relationship('Recipe', backref='days_recipes')
+    day = db.relationship('Day', backref='days_recipes', lazy=False)
+    recipe = db.relationship('Recipe', backref='days_recipes', lazy=False)
     
     def __repr__(self):
         return f'<DaysRecipe id={self.id} day={self.day_id} recipe={self.recipe_id}>'
@@ -150,6 +151,7 @@ class GroceryList(db.Model):
     
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String)
+    active = db.Column(db.Boolean, nullable=False, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
     user = db.relationship('User', backref='grocery_list')

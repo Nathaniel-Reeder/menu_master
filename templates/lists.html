@@ -1,1 +1,42 @@
-{{ extends 'base.html'}}
+{% extends 'base.html' %}
+
+{% block title %}Menu Master: Grocery List{% endblock %}
+
+{% block body %}
+
+{% if active_list %}
+    <h2>Active List:</h2>
+    <ul>
+    {% for grocery_ingredient in active_list.grocery_ingredients %}
+        <li>{{ grocery_ingredient.quantity }} {{ grocery_ingredient.ingredient.name }}</li>
+        <ul>
+            <li><a href="{{url_for('remove_from_list', grocery_ingredient_id=grocery_ingredient.id)}}">Remove</a></li>
+        </ul>
+    {% endfor %}
+    </ul>
+
+    <a href="{{url_for('add_ing_to_list')}}">Add Additional Ingredients</a>
+    <br>
+    <a href="{{url_for('purchase_list')}}">Mark As Purchased</a>
+
+{% endif %}
+
+{% if previous_lists %}
+    <h2>Previous Lists:</h2>
+    {% for list in previous_lists %}
+        <h4>{{ list.name }}</h4>
+        <ul>
+            {% for grocery_ingredient in list.grocery_ingredients %}
+                <li>{{ grocery_ingredient.quantity }} {{ grocery_ingredient.ingredient.name }}</li>
+                
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endif %}
+
+{% if not active_list %}
+<a href="{{url_for('generate_list')}}">Create new list from menu</a>
+{% endif %}
+
+
+{% endblock %}

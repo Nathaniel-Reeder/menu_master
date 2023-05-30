@@ -3,14 +3,30 @@
 {% block title %}Menu Master: Pantry{% endblock %}
 
 {% block body %}
+<div>
+    <h3>Add Ingredient:</h3>
+    <form action="{{url_for('pantry')}}" method="POST">
+        {{add_ingredient_form.csrf_token()}}
 
-{% for item in user_pantry %}
-    <ul>
-        <li>Name: {{item.ingredient.name}}</li>
-        <li>Quantity: {{item.quantity}}</li>
-        <a href="">+1</a>
-        <a href="">-1</a>
-        <a href="/pantry/delfrom/{{item.ingredient.id}}">Remove</a>
-    </ul>
-{% endfor %}
+        {{ add_ingredient_form.ingredient.label }}
+        {{ add_ingredient_form.ingredient }}
+
+        {{ add_ingredient_form.quantity.label }}
+        {{ add_ingredient_form.quantity }}
+
+        {{ add_ingredient_form.submit }}
+    </form>
+</div>
+<br>
+<div>
+    <h3>Ingredients in your pantry:</h3>
+    {% for item in user_pantry %}
+        <ul>
+            <li>Name: {{item.ingredient.name}}</li>
+            <li>Quantity: {{item.quantity}}</li>
+            <a href="/pantry/delfrom/{{item.ingredient.id}}">Remove</a>
+        </ul>
+    {% endfor %}
+</div>
+<br>
 {% endblock %}
