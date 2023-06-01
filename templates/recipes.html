@@ -5,20 +5,28 @@
 {% block body %}
 <h1>Recipes</h1>
 
-<a href="{{url_for('add_recipe')}}">Add Recipe</a>
-
-{% for recipe in user_recipes %}
-    <h3>{{ recipe.name }}</h3>
-    <h4>Ingredients:</h4>
-    {% for ri in recipe.recipe_ingredients %}
-    <ul>
-        <li>{{ ri.quantity }} {{ ri.ingredient.name }}</li>
-    </ul>
-    {% endfor %}
-<h4>Instructions:</h4>
-<p>{{ recipe.instructions }}</p>
+<a class="btn btn-primary" href="{{url_for('add_recipe')}}">Add Recipe</a>
 <br>
-<a href="{{url_for('delete_recipe', recipe_id=recipe.id)}}">Delete</a>
+<br>
+{% for recipe in user_recipes %}
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title">{{ recipe.name }}</h3>
+        <h4 class="card-subtitle">Ingredients:</h4>
+        <br>
+        <ul class="list-group"></ul>
+            {% for ri in recipe.recipe_ingredients %}
+                <li class="list-group-item">{{ ri.quantity }} {{ ri.ingredient.name }}</li>
+            {% endfor %}
+        </ul>
+        <br>
+        <h4 class="card-subtitle">Instructions:</h4>
+        <p class="card-text">{{ recipe.instructions }}</p>
+        <a id="recipe-delete" class="btn btn-outline-secondary btn-sm" href="{{url_for('delete_recipe', recipe_id=recipe.id)}}">Delete</a>        
+    </div>
+
+</div>
+<br>
 {% endfor %}
 
 {% endblock %}

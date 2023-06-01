@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from model import db, connect_to_db, User, OnHand, Ingredient, Menu, Day, DaysRecipe, Recipe, RecipeIngredient, GroceryIngredient, GroceryList
 from werkzeug.security import check_password_hash
-from forms import LoginForm, CreateUserForm, AddIngredientForm, CreateMenuForm, CreateRecipeForm, AddRecipeIngredientForm
+from forms import LoginForm, CreateUserForm, AddIngredientForm, CreateMenuForm, RecipeIngredientForm, RecipeNameForm, RecipeInstructionForm
 
 app = Flask(__name__)
 app.secret_key = os.environ['FLASK_SECRET_KEY']
@@ -58,7 +58,7 @@ def login():
             if check_password_hash(user.password, login_form.password.data):
                 login_user(user)
                 flash('Login Successful')
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('home'))
             else: 
                 flash('Wrong Pasword - Try Again!')
         else:
@@ -182,7 +182,7 @@ def create_menu():
 @app.route('/pantry', methods=['GET', 'POST'])
 @login_required
 def pantry():
-    user_pantry = OnHand.query.filter_by(user_id=current_user.id).all()
+    user_pantry = OnHand.query.filter_by(user=current_user).all()
     
     add_ingredient_form = AddIngredientForm()
     add_ingredient_form.update_ingredients(Ingredient.query.all())
@@ -191,17 +191,18 @@ def pantry():
         ing_id = add_ingredient_form.ingredient.data
         ing_to_add = Ingredient.query.filter_by(id=ing_id).first()
         qty_to_add = add_ingredient_form.quantity.data
-        existing_pantry_item = OnHand.query.filter_by(ingredient=ing_to_add).first()
+        existing_pantry_item = OnHand.query.filter_by(ingredient=ing_to_add, user=current_user).first()
+        
         if existing_pantry_item:
             existing_pantry_item.quantity = qty_to_add + existing_pantry_item.quantity
             db.session.commit()
-            flash(f'Added {qty_to_add} of {existing_pantry_item.ingredient.name}. 1')
+            flash(f'Added {qty_to_add} of {existing_pantry_item.ingredient.name}.')
             return redirect(url_for('pantry'))
         else:
             new_pantry_item = OnHand.create(current_user, ing_to_add, qty_to_add)
             db.session.add(new_pantry_item)
             db.session.commit()
-            flash(f'Added {new_pantry_item.quantity} of {new_pantry_item.ingredient.name}. 2')
+            flash(f'Added {new_pantry_item.quantity} of {new_pantry_item.ingredient.name}.')
             return redirect(url_for('pantry'))
     
     return render_template('pantry.html', user_pantry=user_pantry, add_ingredient_form=add_ingredient_form)
@@ -298,8 +299,6 @@ def generate_list():
         new_grocery_list = GroceryList.create(str(today), current_user)
         new_grocery_list.active = True
         
-        user_pantry = OnHand.query.filter_by(user_id=current_user.id).all()
-        
         for day in active_menu.days:
             for day_recipe in day.days_recipes:
                 for recipe_ingredient in day_recipe.recipe.recipe_ingredients:
@@ -336,15 +335,67 @@ def recipes():
 def delete_recipe(recipe_id):
     recipe = Recipe.query.filter_by(id=recipe_id).first()
     db.session.delete(recipe)
+    db.session.commit()
     flash(f'{recipe.name} deleted!')
     return redirect(url_for('recipes'))
 
-@app.route('/recipe/add')
+@app.route('/recipe/add', methods=["GET", "POST"])
 @login_required
 def add_recipe():
+    name_form = RecipeNameForm()
+    if 'recipe_ingredients' not in session:
+        session['recipe_ingredients'] = []
     
+    if name_form.validate_on_submit():
+        session['recipe_name'] = name_form.name.data
+        
+        return redirect(url_for('add_ing_to_recipe'))
+
+    return render_template('recipe_name.html', name_form=name_form)
+
+@app.route('/recipe/add/ingredient', methods=["GET", "POST"])
+@login_required
+def add_ing_to_recipe():
+    ingredient_form = RecipeIngredientForm()
+    ingredient_form.update_recipe_ingredients(Ingredient.query.all())
     
-    return render_template('add_recipe.html')
+    if ingredient_form.validate_on_submit():
+        recipe_ingredient_list = session['recipe_ingredients']
+        recipe_ingredient_list.append((ingredient_form.ingredient.data, ingredient_form.quantity.data))
+        session['recipe_ingredients'] = recipe_ingredient_list
+        
+        if ingredient_form.add_another.data == "Yes":
+            return redirect(url_for('add_ing_to_recipe'))
+        else: 
+            return redirect(url_for('add_instructions'))
+    
+    return render_template('recipe_ingredient.html', ingredient_form=ingredient_form)
+
+@app.route('/recipe/add/instructions', methods=["GET", "POST"])
+@login_required
+def add_instructions():
+    instruction_form = RecipeInstructionForm()
+    
+    if instruction_form.validate_on_submit():
+        new_recipe = Recipe.create(session['recipe_name'], instruction_form.instructions.data, current_user)
+        db.session.add(new_recipe)
+        print(session['recipe_ingredients'])
+        for (ingredient_id, quantity) in session['recipe_ingredients']:
+            ing_to_add = Ingredient.query.filter_by(id=ingredient_id).first()
+            print(ing_to_add)
+            new_recipe_ingredient = RecipeIngredient.create(new_recipe, ing_to_add, quantity)
+            
+            db.session.add(new_recipe_ingredient)
+        
+        db.session.commit()
+        
+        session.pop('recipe_ingredients', default=None)
+        session.pop('recipe_name', default=None)
+        
+        flash("Recipe added!")
+        return redirect(url_for('recipes'))
+    
+    return render_template('recipe_instructions.html', instruction_form=instruction_form)
 
 @app.route('/recipe/view/<recipe_id>')
 @login_required

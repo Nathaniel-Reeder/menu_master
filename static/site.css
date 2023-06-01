@@ -1,6 +1,13 @@
 .form-container{
     max-width: 25%;
-    margin-left: 5%;
-    margin-top: 1%;
 }
 
+.mainbody{
+    margin-left: 5%;
+    margin-top: 1%;
+    margin-right: 5%;
+}
+
+#recipe-delete{
+    max-width: 5%;
+}

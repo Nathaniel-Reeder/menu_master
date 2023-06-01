@@ -21,11 +21,11 @@
 <div>
     <h3>Ingredients in your pantry:</h3>
     {% for item in user_pantry %}
-        <ul>
-            <li>Name: {{item.ingredient.name}}</li>
-            <li>Quantity: {{item.quantity}}</li>
-            <a href="/pantry/delfrom/{{item.ingredient.id}}">Remove</a>
+        <ul class="list-group">
+            <li class="list-group-item">Name: {{item.ingredient.name}} <a class="btn btn-outline-secondary btn-sm" href="/pantry/delfrom/{{item.ingredient.id}}">Remove</a></li>
+            <li class="list-group-item">Quantity: {{item.quantity}}</li> 
         </ul>
+        <br>
     {% endfor %}
 </div>
 <br>

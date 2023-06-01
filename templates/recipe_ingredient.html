@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Menu Master: Add Ingredients{% endblock %}
+
+{% block body %}
+<div class="mainbody">
+    <h3>Add an ingredient</h3>
+    <form action="{{url_for('add_ing_to_recipe')}}" method="POST">
+        {{ ingredient_form.csrf_token() }}
+
+        {{ ingredient_form.ingredient.label }}
+        {{ ingredient_form.ingredient }}
+        <br>
+        {{ ingredient_form.quantity.label }}
+        {{ ingredient_form.quantity }}
+        <br>
+        {{ ingredient_form.add_another.label }}
+        {{ ingredient_form.add_another }}
+        <br>
+        {{ ingredient_form.submit }}
+
+    </form>
+</div>
+
+
+
+{% endblock %}

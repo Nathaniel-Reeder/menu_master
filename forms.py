@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, IntegerField, TextAreaField, SelectField, SubmitField, EmailField, Form
+from wtforms import StringField, PasswordField, IntegerField, TextAreaField, SelectField, SubmitField, EmailField, Form, FormField, FieldList
 from wtforms.validators import DataRequired
+import model
+
 
 class LoginForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
@@ -43,14 +45,21 @@ class CreateMenuForm(FlaskForm):
         self.friday_recipe.choices = recipe_choices
         self.saturday_recipe.choices = recipe_choices
         
-class CreateRecipeForm(FlaskForm):
-    name = StringField("Recipe Name", validators=[DataRequired()])
-    instructions = TextAreaField("Instructions", validators=[DataRequired()])
-    submit = SubmitField("Submit")
-    
-class AddRecipeIngredientForm(Form):
+
+class RecipeIngredientForm(FlaskForm):
     ingredient = SelectField("Ingredient", validators=[DataRequired()])
     quantity = IntegerField("Quantity", validators=[DataRequired()])
+    add_another = SelectField("Add Another Ingredient?", choices=["Yes", "No"], validators=[DataRequired()])
+    submit = SubmitField("Submit")
     
     def update_recipe_ingredients(self, ingredients):
         self.ingredient.choices = [(item.id, item.name) for item in ingredients]
+        
+class RecipeNameForm(FlaskForm):
+    name = StringField("Recipe Name", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+    
+class RecipeInstructionForm(FlaskForm):
+    instructions = TextAreaField("Instructions", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+    

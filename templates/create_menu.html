@@ -3,7 +3,7 @@
 {% block title %}Menu Master: Create Menu{% endblock %}
 
 {% block body %}
-
+<div></div>
 <h3>Create Menu</h3>
 
 <form action="{{url_for('create_menu')}}" method="POST">
@@ -11,28 +11,28 @@
 
     {{ create_menu_form.name.label }}
     {{ create_menu_form.name}}
-
+    <br>
     {{ create_menu_form.sunday_recipe.label }}
     {{ create_menu_form.sunday_recipe }}
-
+    <br>
     {{ create_menu_form.monday_recipe.label }}
     {{ create_menu_form.monday_recipe }}
-
+    <br>
     {{ create_menu_form.tuesday_recipe.label }}
     {{ create_menu_form.tuesday_recipe }}
-
+    <br>
     {{ create_menu_form.wednesday_recipe.label }}
     {{ create_menu_form.wednesday_recipe }}
-
+    <br>
     {{ create_menu_form.thursday_recipe.label }}
     {{ create_menu_form.thursday_recipe }}
-
+    <br>
     {{ create_menu_form.friday_recipe.label }}
     {{ create_menu_form.friday_recipe }}
-
+    <br>
     {{ create_menu_form.saturday_recipe.label }}
     {{ create_menu_form.saturday_recipe }}
-
+    <br>
     {{ create_menu_form.submit }}
 </form>
 

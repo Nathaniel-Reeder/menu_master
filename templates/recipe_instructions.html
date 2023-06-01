@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Menu Master: Recipe Instructions{% endblock %}
+
+{% block body %}
+
+<h3>Add Instructions for your recipe</h3>
+<form action="{{url_for('add_instructions')}}" method="POST">
+    {{ instruction_form.csrf_token() }}
+
+    {{ instruction_form.instructions.label }}
+    <br>
+    {{ instruction_form.instructions }}
+    <br>
+    {{ instruction_form.submit }}
+</form>
+
+{% endblock %}
